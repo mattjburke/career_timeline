@@ -1,69 +1,78 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #f9f9f9;
-  }
-  
-  .App {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .timeline-container {
-    position: relative;
-    padding-left: 40px;
-  }
-  
-  .timeline-line {
-    position: absolute;
-    left: 20px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: repeating-linear-gradient(
-      to bottom,
-      #ccc,
-      #ccc 5px,
-      transparent 5px,
-      transparent 10px
-    );
-  }
-  
-  .timeline-ball {
-    position: absolute;
-    left: 10px;
-    width: 20px;
-    height: 20px;
-    background: #007bff;
-    border-radius: 50%;
-    animation: moveBall 10s linear infinite;
-  }
-  
-  @keyframes moveBall {
-    0% { top: 0; }
-    100% { top: 100%; }
-  }
-  
-  .timeline-item {
-    margin-bottom: 40px;
-    position: relative;
-  }
-  
-  .timeline-date {
-    font-weight: bold;
-  }
-  
-  .timeline-content {
-    background: #fff;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .timeline-content img {
-    max-width: 100%;
-    display: block;
-    margin-top: 10px;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Timeline container for overall layout */
+.timeline-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Timeline line on the left: fixed height so that "Today" is at the top and "1994" at the bottom */
+.timeline-line {
+  position: relative;
+  width: 2px;
+  height: 100vh;  /* Full viewport height */
+  margin-right: 40px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #ccc,
+    #ccc 5px,
+    transparent 5px,
+    transparent 10px
+  );
+}
+
+/* Labels for top and bottom of the timeline */
+.timeline-label {
+  position: absolute;
+  left: -50px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.timeline-label.top {
+  top: 0;
+}
+
+.timeline-label.bottom {
+  bottom: 0;
+}
+
+/* The moving ball on the timeline */
+.timeline-ball {
+  position: absolute;
+  left: -9px;  /* Center ball relative to the 2px line */
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  transition: top 0.2s ease-out;
+}
+
+/* Timeline items to the right */
+.timeline-items {
+  flex: 1;
+}
+
+.timeline-item {
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-date {
+  font-weight: bold;
+  margin-bottom: 5px;
+}

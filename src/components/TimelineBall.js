@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TimelineBall() {
-  return <div className="timeline-ball"></div>;
+function TimelineBall({ position }) {
+  return <div className="timeline-ball" style={{ top: position }}></div>;
 }
 
 export default TimelineBall;
