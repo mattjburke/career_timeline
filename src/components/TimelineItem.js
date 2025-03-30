@@ -1,9 +1,9 @@
 import React from 'react';
 
-function TimelineItem({ data }) {
+const TimelineItem = React.forwardRef(({ data, active, ...rest }, ref) => {
   const { year, event, description, image } = data;
   return (
-    <div className="timeline-item">
+    <div className={`timeline-item ${active ? 'active' : ''}`} ref={ref} {...rest}>
       <div className="timeline-date">{year}</div>
       <div className="timeline-content">
         <h2>{event}</h2>
@@ -12,6 +12,6 @@ function TimelineItem({ data }) {
       </div>
     </div>
   );
-}
+});
 
 export default TimelineItem;

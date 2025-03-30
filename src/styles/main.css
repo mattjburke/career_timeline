@@ -90,13 +90,17 @@ body {
   box-sizing: border-box;
 }
 
-/* Styling for each timeline item */
 .timeline-item {
   margin-bottom: 40px;
   background: #fff;
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.timeline-item.active {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
 .timeline-date {
