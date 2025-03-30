@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import TimelineItem from './TimelineItem';
 import TimelineBall from './TimelineBall';
 
-// Sample timeline data
+// Sample timeline data (add as many items as needed)
 const timelineData = [
   { year: new Date().getFullYear(), event: "Event Today", description: "Description for today", image: "path/to/imageToday.jpg" },
   { year: 2020, event: "Event A", description: "Description for Event A", image: "path/to/image2020.jpg" },
@@ -21,18 +21,19 @@ function Timeline() {
   const timelineLineRef = useRef(null);
   const itemsRef = useRef([]);
 
-  // Scroll event for ball position and date interpolation.
   useEffect(() => {
     function handleScroll() {
       if (!itemsContainerRef.current || !timelineLineRef.current) return;
-      const scrollTop = itemsContainerRef.current.scrollTop;
-      const scrollHeight = itemsContainerRef.current.scrollHeight;
-      const clientHeight = itemsContainerRef.current.clientHeight;
-      // Calculate progress between 0 and 1.
+      const container = itemsContainerRef.current;
+      const scrollTop = container.scrollTop;
+      const scrollHeight = container.scrollHeight;
+      const clientHeight = container.clientHeight;
+
+      // Calculate scroll progress (0 at top, 1 at bottom)
       const progress = Math.min(Math.max(scrollTop / (scrollHeight - clientHeight), 0), 1);
       const lineHeight = timelineLineRef.current.clientHeight;
       setBallPosition(progress * lineHeight);
-      
+
       // Interpolate date between Today and Feb 9, 1994.
       const topDate = new Date(); // Today
       const bottomDate = new Date(1994, 1, 9); // Feb 9, 1994 (months are 0-indexed)
@@ -40,44 +41,32 @@ function Timeline() {
       const interpolatedDate = new Date(interpolatedTime);
       const label = interpolatedDate.toLocaleString('default', { month: 'short', year: 'numeric' });
       setDateLabel(label);
+
+      // Determine the active timeline item (the top-most fully visible item)
+      let candidate = null;
+      let minItemTop = Infinity;
+      itemsRef.current.forEach((item, index) => {
+        if (!item) return;
+        const itemTop = item.offsetTop;
+        const itemBottom = itemTop + item.offsetHeight;
+        // Fully in view if the item's top is below scrollTop and its bottom is above scrollTop + clientHeight
+        if (itemTop >= scrollTop && itemBottom <= scrollTop + clientHeight) {
+          if (itemTop < minItemTop) {
+            minItemTop = itemTop;
+            candidate = index;
+          }
+        }
+      });
+      if (candidate !== null) {
+        setActiveIndex(candidate);
+      }
     }
+
     const container = itemsContainerRef.current;
     container.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initialize on mount.
+    // Initialize on mount
+    handleScroll();
     return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Intersection Observer to highlight the top-most fully visible timeline item.
-  useEffect(() => {
-    if (!itemsContainerRef.current) return;
-    const observerOptions = {
-      root: itemsContainerRef.current,
-      threshold: 0.95  // Adjusted threshold: nearly full view.
-    };
-    const observer = new IntersectionObserver((entries) => {
-      // Filter entries that are nearly fully visible.
-      const visibleEntries = entries.filter(entry => entry.intersectionRatio >= 0.95);
-      let activeEntry = null;
-      if (visibleEntries.length > 0) {
-        // Choose the one closest to the top.
-        activeEntry = visibleEntries.reduce((prev, curr) =>
-          prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr
-        );
-      }
-      if (activeEntry) {
-        const index = Number(activeEntry.target.getAttribute('data-index'));
-        setActiveIndex(index);
-      }
-    }, observerOptions);
-
-    itemsRef.current.forEach(item => {
-      if (item) observer.observe(item);
-    });
-    return () => {
-      itemsRef.current.forEach(item => {
-        if (item) observer.unobserve(item);
-      });
-    };
   }, []);
 
   return (
@@ -95,7 +84,7 @@ function Timeline() {
             key={index}
             data={item}
             active={index === activeIndex}
-            data-index={index}  // Pass the data-index attribute.
+            data-index={index}
             ref={el => itemsRef.current[index] = el}
           />
         ))}
