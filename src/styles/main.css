@@ -22,17 +22,17 @@ body {
   left: 20px;
   top: 0;
   width: 80px; /* Adjust as needed */
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* The vertical dashed line */
+/* The vertical dashed line with buffer from the top and bottom */
 .timeline-line {
   position: relative;
-  width: 2px;
-  height: 100%;
+  width: 5px;
+  height: 80%; /* 20px buffer on top and bottom */
   background: repeating-linear-gradient(
     to bottom,
     #ccc,
@@ -61,10 +61,10 @@ body {
 /* Container for the ball and its label */
 .timeline-ball-wrapper {
   position: absolute;
-  left: 0;
+  left: 50%;
   display: flex;
   align-items: center;
-  transform: translateX(-50%);
+  transform: translateX(-10%);
 }
 
 .timeline-ball {
