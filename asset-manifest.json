@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/career_timeline/static/css/main.b5c5b800.css",
-    "main.js": "/career_timeline/static/js/main.6af04098.js",
+    "main.css": "/career_timeline/static/css/main.eb75ac19.css",
+    "main.js": "/career_timeline/static/js/main.d07cc5ff.js",
     "index.html": "/career_timeline/index.html",
-    "main.b5c5b800.css.map": "/career_timeline/static/css/main.b5c5b800.css.map",
-    "main.6af04098.js.map": "/career_timeline/static/js/main.6af04098.js.map"
+    "main.eb75ac19.css.map": "/career_timeline/static/css/main.eb75ac19.css.map",
+    "main.d07cc5ff.js.map": "/career_timeline/static/js/main.d07cc5ff.js.map"
   },
   "entrypoints": [
-    "static/css/main.b5c5b800.css",
-    "static/js/main.6af04098.js"
+    "static/css/main.eb75ac19.css",
+    "static/js/main.d07cc5ff.js"
   ]
 }
