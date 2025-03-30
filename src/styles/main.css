@@ -1,28 +1,38 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background: #f9f9f9;
 }
 
 .App {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
 }
 
-/* Timeline container for overall layout */
-.timeline-container {
-  position: relative;
+/* Wrapper to contain the fixed sidebar and scrollable content */
+.timeline-wrapper {
   display: flex;
-  flex-direction: row;
 }
 
-/* Timeline line on the left: fixed height so that "Today" is at the top and "1994" at the bottom */
+/* Fixed timeline sidebar */
+.timeline-fixed {
+  position: fixed;
+  left: 20px;
+  top: 0;
+  width: 80px; /* Adjust as needed */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The vertical dashed line */
 .timeline-line {
   position: relative;
   width: 2px;
-  height: 100vh;  /* Full viewport height */
-  margin-right: 40px;
+  height: 100%;
   background: repeating-linear-gradient(
     to bottom,
     #ccc,
@@ -32,7 +42,7 @@ body {
   );
 }
 
-/* Labels for top and bottom of the timeline */
+/* Labels for the timeline */
 .timeline-label {
   position: absolute;
   left: -50px;
@@ -51,7 +61,7 @@ body {
 /* The moving ball on the timeline */
 .timeline-ball {
   position: absolute;
-  left: -9px;  /* Center ball relative to the 2px line */
+  left: -9px;  /* Centers the ball on the 2px line */
   width: 20px;
   height: 20px;
   background: #007bff;
@@ -59,17 +69,23 @@ body {
   transition: top 0.2s ease-out;
 }
 
-/* Timeline items to the right */
-.timeline-items {
-  flex: 1;
+/* Scrollable container for timeline items */
+.timeline-items-container {
+  margin-left: 120px; /* Leaves space for the fixed sidebar */
+  width: calc(100% - 120px);
+  height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Styling for each timeline item */
 .timeline-item {
   margin-bottom: 40px;
   background: #fff;
   padding: 10px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .timeline-date {
